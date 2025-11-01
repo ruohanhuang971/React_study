@@ -1,14 +1,19 @@
-import { useState } from 'react';
-import { tempMovieData } from '../../../assets/tempData';
-import Movie from './Movie';
+import Movie, { type MovieType } from './Movie';
 
-const MovieList = () => {
-    const [movies, setMovies] = useState(tempMovieData);
+interface MovieListProp {
+    movies: MovieType[];
+    onSelectMovie: (id: string) => void;
+}
 
+const MovieList = ({ movies, onSelectMovie }: MovieListProp) => {
     return (
-        <ul className="list">
+        <ul className="list list-movies">
             {movies?.map((movie) => (
-                <Movie movie={movie} key={movie.imdbID} />
+                <Movie
+                    movie={movie}
+                    onSelectMovie={onSelectMovie}
+                    key={movie.imdbID}
+                />
             ))}
         </ul>
     );

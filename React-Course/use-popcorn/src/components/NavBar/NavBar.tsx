@@ -1,15 +1,11 @@
-import Search from './Search';
-import Logo from './Logo';
-import NumResults from './NumResults';
+import type { ReactNode } from 'react';
 
-const NavBar = () => {
-    return (
-        <nav className="nav-bar">
-            <Logo />
-            <Search />
-            <NumResults />
-        </nav>
-    );
+interface NavBarProp {
+    children: ReactNode;
+}
+
+const NavBar = ({ children }: NavBarProp) => {
+    return <nav className="nav-bar">{children}</nav>;
 };
 
 export default NavBar;

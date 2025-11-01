@@ -1,15 +1,15 @@
-import React from 'react';
 import type { MovieSummary } from './WatchedBox';
 
 interface WatchedMovieProp {
     movie: MovieSummary;
+    onDeleteWatched: (id: string) => void;
 }
 
-const WatchedMovie = ({ movie }: WatchedMovieProp) => {
+const WatchedMovie = ({ movie, onDeleteWatched }: WatchedMovieProp) => {
     return (
         <li>
-            <img src={movie.Poster} alt={`${movie.Title} poster`} />
-            <h3>{movie.Title}</h3>
+            <img src={movie.poster} alt={`${movie.title} poster`} />
+            <h3>{movie.title}</h3>
             <div>
                 <p>
                     <span>⭐️</span>
@@ -23,6 +23,11 @@ const WatchedMovie = ({ movie }: WatchedMovieProp) => {
                     <span>⏳</span>
                     <span>{movie.runtime} min</span>
                 </p>
+
+                <button
+                    className="btn-delete"
+                    onClick={() => onDeleteWatched(movie.imdbID)}
+                ></button>
             </div>
         </li>
     );

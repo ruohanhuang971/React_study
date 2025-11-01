@@ -1,13 +1,13 @@
-import ListBox from '../MovieList/ListBox';
-import WatchedBox from './WatchedBox';
+import type { ReactNode } from 'react';
 
-const Main = () => {
+interface MainProp {
+    children: ReactNode;
+}
+
+const Main = ({ children }: MainProp) => {
     return (
         <div>
-            <main className="main">
-                <ListBox />
-                <WatchedBox />
-            </main>
+            <main className="main">{children}</main>
         </div>
     );
 };

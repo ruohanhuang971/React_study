@@ -5,16 +5,16 @@ import WatchedMovieList from './WatchedMovieList';
 
 export type MovieSummary = {
     imdbID: string;
-    Title: string;
-    Year: string;
-    Poster: string;
+    title: string;
+    year: string;
+    poster: string;
     imdbRating: number;
     userRating: number;
     runtime: number;
 };
 
 const WatchedBox = () => {
-    const [watched, setWatched] = useState(tempWatchedData);
+    const [watched, setWatched] = useState<MovieSummary[]>([]);
     const [isOpen2, setIsOpen2] = useState(true);
 
     return (

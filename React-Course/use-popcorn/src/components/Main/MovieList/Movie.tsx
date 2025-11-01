@@ -7,11 +7,12 @@ export type MovieType = {
 
 interface MovieProp {
     movie: MovieType;
+    onSelectMovie: (id: string) => void;
 }
 
-const Movie = ({ movie }: MovieProp) => {
+const Movie = ({ movie, onSelectMovie }: MovieProp) => {
     return (
-        <li>
+        <li onClick={() => onSelectMovie(movie.imdbID)}>
             <img src={movie.Poster} alt={`${movie.Title} poster`} />
             <h3>{movie.Title}</h3>
             <div>
