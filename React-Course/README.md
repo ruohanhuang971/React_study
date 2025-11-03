@@ -132,3 +132,18 @@ note: using _vite_ & _typescript_ instead of _create-react-app_ & _javascript_
     -   create variable that persist between renders
         -   ex: previous state, setTimeout id, etc.
     -   selecting and storing DOM elements
+
+**useReducer**
+
+-   use cases:
+    -   components have a lot of state variables and updates spread all over the
+        component
+    -   multiple state updates need to happen at the same time (as reaction to
+        the same event, like "state game")
+    -   updating one piece of state depends on one or multiple other pieces of
+        state
+-   store related states in a state object
+-   reducer is a pure function that takes current state and action and return
+    the next state
+-   action: object that describes how to update state {type, payload}
+-   dispatch: function to trigger state update
