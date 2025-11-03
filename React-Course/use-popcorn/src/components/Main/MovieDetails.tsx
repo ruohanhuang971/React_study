@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import StarRating from '../StarRating';
 import Loader from '../Loader';
 import type { MovieSummary } from './SavedInfo/WatchedBox';
+import { useKey } from '../../custom_hooks/useKey';
 
 interface MovieDetailsProp {
     selectedId: string;
@@ -33,6 +34,8 @@ const MovieDetails = ({
     const [isloading, setIsLoading] = useState<boolean>(false);
     const [userRating, setUserRating] = useState(0);
 
+    const countRef = useRef<number>(0);
+
     const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
     const watchedUserSetting = watched.find(
         (movie) => movie.imdbID
@@ -60,11 +63,16 @@ const MovieDetails = ({
             imdbRating: Number(imdbRating),
             userRating,
             runtime: Number(runtime!.split(' ').at(0)),
+            countRatingDecisions: countRef.current,
         };
 
         onAddWatched(newWatchedMovie);
         onCloseMovie();
     };
+
+    useEffect(() => {
+        if (userRating) countRef.current = countRef.current + 1;
+    }, [userRating]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -90,18 +98,7 @@ const MovieDetails = ({
         };
     }, [title]);
 
-    useEffect(() => {
-        function callback(e: KeyboardEvent) {
-            if (e.code === 'Escape') {
-                onCloseMovie();
-            }
-        }
-        document.addEventListener('keydown', callback);
-
-        return function () {
-            document.removeEventListener('keydown', callback);
-        };
-    }, [onCloseMovie]);
+    useKey('Escape', onCloseMovie);
 
     return (
         <div className="details">

@@ -83,3 +83,52 @@ note: using _vite_ & _typescript_ instead of _create-react-app_ & _javascript_
     -   write code that will run at different moments of the component's life
         cycle
         -   mount, rerender, or unmount
+
+## **Hooks**
+
+-   built in function that allow us to "hook" into React internals
+-   rules:
+    -   only call hooks at top level
+        -   not inside conditional, loops, nested functions, or after an early
+            return
+        -   this is because hooks always need to be called in the same order
+    -   only call hooks from React functions
+        -   inside function component or a custom hook
+
+**useState**
+
+-   creating state:
+    -   simple:
+        ```js
+        const [count, setCount] = useState(23);
+        ```
+    -   based on function (lazy evaluation)
+        -   function must be pure and have no arguments
+        -   this function will only be evaluated on initial render
+        ```js
+        const [count, setCount] = useState(() => localstorage.getItem('count'));
+        ```
+-   update state:
+    -   simple:
+        ```js
+        setCount(1000);
+        ```
+    -   based on current state:
+        -   function must be pure and return next state
+        -   don't mutate object/arrays, make a new object/array and replace the
+            old one
+        ```js
+        setCount((c) => c + 1);
+        ```
+
+**useRef**
+
+-   mutable and value persist across renders
+-   usually used for data that is NOT rendered:
+    -   only appear in event handlers or effects, not in JSX (otherwise use
+        state)
+-   don't write or read .current in render logic
+-   use cases:
+    -   create variable that persist between renders
+        -   ex: previous state, setTimeout id, etc.
+    -   selecting and storing DOM elements
