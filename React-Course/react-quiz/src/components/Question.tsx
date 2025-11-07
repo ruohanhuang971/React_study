@@ -9,7 +9,6 @@ interface QuestionProp {
 }
 
 const Question = ({ question, answer, dispatch }: QuestionProp) => {
-    console.log(question);
     return (
         <div>
             <h4>{question.question}</h4>
