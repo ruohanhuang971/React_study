@@ -147,3 +147,47 @@ note: using _vite_ & _typescript_ instead of _create-react-app_ & _javascript_
     the next state
 -   action: object that describes how to update state {type, payload}
 -   dispatch: function to trigger state update
+
+## **Routes**
+
+-   define a new path:
+    ```js
+    <Route path={} element={} />
+    ```
+-   nest routes: .../parent/child:
+    ```js
+    <Routes path={parent} element=...>
+        <Routes path={child} element=... />
+    </Routes>
+    ```
+-   default route: when there are no matches -> go to default
+    ```js
+    <Route index element=<Homepage /> />
+    ```
+-   Navigating between links:
+    ```js
+    <Link to="/about">About</Link>
+    ```
+    -   NavLink add an "active" class: useful for giving a different styling for
+        the current link on the navbar
+        ```js
+        <NavLink
+            to="/about"
+            className={({ isActive }) => (isActive ? 'active-link' : '')}
+        >
+            About
+        </NavLink>
+        ```
+-   use URL to store state of UI
+    -   ex: open/close panels, currently selected list item, ...
+    -   **why use URL to store states?:**
+        -   easy way to store state globally, accessible to all components in
+            the app
+        -   good way to pass data from one page to the next
+        -   makes it possible to bookmark/share the page with exact UI state at
+            that moment
+    -   this is possible with params and query string in the URL
+        -   www.example.com/app/cities/lisbon?lat=38.728&lng=-9.141
+        -   path: /app/cities
+        -   params: lisbon [pass data to next page]
+        -   query string: lat=38.728&lng=-9.141 [store global state]
