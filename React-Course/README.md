@@ -21,24 +21,23 @@ note: using _vite_ & _typescript_ instead of _create-react-app_ & _javascript_
     -   use case: create highly reusable and flexible components (or explicit
         elements), fix prop drilling
 
-## **Components vs instances vs elements:**
+## **Components vs instances vs elements**
 
-    -   component:
-        -   function that return React elements
-        -   blueprint
-    -   component instance:
-        -   created when components are "used" when React calls the component
-            function
-        -   Actual "physical" manifestation of a component in the component tree
-        -   has its own states and props
-        -   has a lifecycle (born -> live -> die)
-    -   react element:
-        -   react of function calls (JSX convert to React.createElement()
-            function calls)
-        -   info necessary to create DOM elements
-    -   DOM elements:
-        -   actual visual representation of the component instance in the
-            browser
+-   component:
+    -   function that return React elements
+    -   blueprint
+-   component instance:
+    -   created when components are "used" when React calls the component
+        function
+    -   Actual "physical" manifestation of a component in the component tree
+    -   has its own states and props
+    -   has a lifecycle (born -> live -> die)
+-   react element:
+    -   react of function calls (JSX convert to React.createElement() function
+        calls)
+    -   info necessary to create DOM elements
+-   DOM elements:
+    -   actual visual representation of the component instance in the browser
 
 ## **React displaying process**
 
@@ -170,7 +169,7 @@ note: using _vite_ & _typescript_ instead of _create-react-app_ & _javascript_
     ```
     -   NavLink add an "active" class: useful for giving a different styling for
         the current link on the navbar
-        ```js
+        ```TSX
         <NavLink
             to="/about"
             className={({ isActive }) => (isActive ? 'active-link' : '')}
@@ -178,6 +177,24 @@ note: using _vite_ & _typescript_ instead of _create-react-app_ & _javascript_
             About
         </NavLink>
         ```
+-   change pages programmatically:
+    -   go to another route (push to history)
+        ```js
+        const navigate = useNavigate();
+        navigate('/dashboard');
+        ```
+    -   navigate backward or forward in history (use for back button)
+        ```js
+        navigate(-1); // go back
+        navigate(1); // go forward
+        ```
+-   redirect page in nested routes:
+    ```TSX
+    {
+        /* redirect to /app/cities and replace /app in the history stack */
+    }
+    <Route index element={<Navigate replace to="cities" />} />;
+    ```
 -   use URL to store state of UI
     -   ex: open/close panels, currently selected list item, ...
     -   **why use URL to store states?:**
@@ -191,3 +208,50 @@ note: using _vite_ & _typescript_ instead of _create-react-app_ & _javascript_
         -   path: /app/cities
         -   params: lisbon [pass data to next page]
         -   query string: lat=38.728&lng=-9.141 [store global state]
+    -   code:
+        ```js
+        const { id } = useParams(); // lisbon
+        ```
+        ```js
+        const [searchParams, setSearchParams] = useSearchParams();
+        const lat = searchParams.get('lat'); // 38.728
+        const lng = searchParams.get('lng'); // -9.141
+        ```
+
+## **Context API**
+
+-   Solution to Prop drilling
+    -   broadcast global states to the entire app
+-   setup
+    -   provider: gives all child components access to value
+    -   value: data, usually state and functions
+    -   consumers: all components that read provided context value
+-   when value is updated -> all consumer is re-rendered
+-   code:
+
+    ````TSX
+        // create new context: this is a component
+        const PostContext = createContext();
+
+        // wrap children in context
+        const Parent = () => {
+            return (
+                <PostContext.Provider
+                    value={{
+                        posts: searchedPosts,
+                        onAddPost: handleAddPost,
+                        onClearPosts: handleClearPosts,
+                    }}
+                >
+                    // ...
+                </PostContext.Provider>;
+            )
+        }
+
+        // using the context in child
+        const Child = () => {
+            const { onClearPosts } = useContext(PostContext);
+            // ...
+        }
+        ```
+    ````
